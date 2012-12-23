@@ -46,6 +46,22 @@ sub parse_tiezi_urls {
     #帖子分页url 
 }
 
+sub parse_board_topic {
+    #版块内容    
+}
+
+sub parse_board_subboards {
+    #子版块 url 
+}
+
+sub parse_board_tiezis {
+    #版块帖子 url
+}
+
+sub parse_board_urls {
+    #版块分页 url 
+}
+
 
 no Moo;
 1;

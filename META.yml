@@ -14,4 +14,5 @@ meta-spec:
 name: Tiezi-Robot-Parser
 requires:
   Moo: 1.000007
-version: 0.02
+  Web::Scraper: 0.37
+version: 0.03
