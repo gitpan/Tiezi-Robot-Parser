@@ -1,0 +1,51 @@
+
+use strict;
+use warnings;
+
+
+
+use ExtUtils::MakeMaker 6.30;
+
+
+
+my %WriteMakefileArgs = (
+  "ABSTRACT" => "\345\270\226\345\255\220\347\253\231\347\202\271\350\247\243\346\236\220\345\274\225\346\223\216",
+  "AUTHOR" => "abbypan <abbypan\@gmail.com>",
+  "BUILD_REQUIRES" => {},
+  "CONFIGURE_REQUIRES" => {
+    "ExtUtils::MakeMaker" => "6.30"
+  },
+  "DISTNAME" => "Tiezi-Robot-Parser",
+  "EXE_FILES" => [],
+  "LICENSE" => "perl",
+  "NAME" => "Tiezi::Robot::Parser",
+  "PREREQ_PM" => {
+    "Moo" => "1.000007"
+  },
+  "VERSION" => "0.02",
+  "test" => {
+    "TESTS" => ""
+  }
+);
+
+
+unless ( eval { ExtUtils::MakeMaker->VERSION(6.56) } ) {
+  my $br = delete $WriteMakefileArgs{BUILD_REQUIRES};
+  my $pp = $WriteMakefileArgs{PREREQ_PM};
+  for my $mod ( keys %$br ) {
+    if ( exists $pp->{$mod} ) {
+      $pp->{$mod} = $br->{$mod} if $br->{$mod} > $pp->{$mod};
+    }
+    else {
+      $pp->{$mod} = $br->{$mod};
+    }
+  }
+}
+
+delete $WriteMakefileArgs{CONFIGURE_REQUIRES}
+  unless eval { ExtUtils::MakeMaker->VERSION(6.52) };
+
+WriteMakefile(%WriteMakefileArgs);
+
+
+
