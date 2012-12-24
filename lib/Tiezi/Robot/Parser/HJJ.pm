@@ -101,6 +101,7 @@ sub parse_board_tiezis {
         @temp{qw/name/} = m{</td></tr></table></td>\s+<td>&nbsp;(.+?)</td>}s;
         @temp{qw/time/}=m{<td align="center"><font size="-1">(.+?)</font></td>}s;
         $temp{url} = "$self->{base}/$temp{url}";
+        $temp{title}=~s#</?font[^>]*>##g;
         $_ = \%temp;
     } ## end for (@tiezi_list)
     return \@tiezi_list;
