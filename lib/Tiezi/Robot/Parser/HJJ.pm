@@ -7,6 +7,7 @@ use Moo;
 extends 'Tiezi::Robot::Parser::Base';
 use Encode;
 use Web::Scraper;
+use utf8;
 
 has '+base'    => ( default => sub {'http://bbs.jjwxc.net'} );
 has '+site'    => ( default => sub {'HJJ'} );
@@ -120,7 +121,7 @@ sub parse_board_urls {
 
 sub make_query_url {
 
-    my ( $self, $board, $type, $keyword ) = @_;
+    my ( $self, $opt ) = @_;
 
     my $url = $self->{base} . '/search.php?act=search';
 
@@ -131,16 +132,16 @@ sub make_query_url {
         '主题贴发贴人' => 4,
         '跟贴发贴人' => 5,
     );
-    
-    return (
-        $url,
+
+    my $post = 
         {   
-            'board' => $board, 
-            'keyword' => $keyword,
-            'topic'  => $Query_Type{$type},
+            'board' => $opt->{board}+0, 
+            'keyword' => encode( $self->{charset}, $opt->{keyword}),
+            'topic'  => $Query_Type{$opt->{type}},
             'submit'  => encode( $self->{charset}, '查询' ),
-        },
-    );
+        };
+    
+    return ( $url, $post );
 
 } ## end sub make_query_url
 
@@ -167,7 +168,7 @@ sub parse_query {
             $title=~s#</?font[^>]+>##ig;
             my $url = $h->attr('href');
             $url="$self->{base}/$url";
-            return { 'title' => $title, url => $url };
+            return { 'title' => $title, url => encode($self->{charset}, $url) };
         };
         result 'tiezis';
     };

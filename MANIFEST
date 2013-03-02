@@ -3,6 +3,7 @@ MANIFEST
 META.yml
 Makefile.PL
 README
+README.md
 dist.ini
 lib/Tiezi/Robot/Parser.pm
 lib/Tiezi/Robot/Parser/Base.pm

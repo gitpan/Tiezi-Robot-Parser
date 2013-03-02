@@ -1,67 +1,37 @@
-#===============================================================================
-#  DESCRIPTION:  各站点的解析引擎
-#       AUTHOR:  AbbyPan (USTC), <abbypan@gmail.com>
-#===============================================================================
+#  ABSTRACT:  各BBS站点的解析引擎
 package  Tiezi::Robot::Parser::Base;
 use strict;
 use warnings;
 use Moo;
 
-has base => (
-    #网站基地址
-    is => 'rw',
-);
+#网站基地址
+has base => ( is => 'rw' );
 
-has site => (
+#网站名称
+has site => ( is => 'rw' );
 
-    #网站名称
-    is => 'rw',
-);
+has charset => ( is => 'rw' );
 
-has charset => (
+#主题贴内容
+sub parse_tiezi_topic { }
 
-    is => 'rw',
-);
+#跟帖内容
+sub parse_tiezi_floors { }
 
-sub detect_site_by_url {
-    my ($self, $url) = @_;
-    
-    my $site =
-          ( $url =~ m#^http://bbs\.jjwxc\.net/# )  ? 'HJJ'
-        :                                            'Base';
-    
-    return $site;
-}
+#帖子分页url
+sub parse_tiezi_urls { }
 
-sub parse_tiezi_topic {
-    #主题贴内容
-}
+#版块内容
+sub parse_board_topic { }
 
-sub parse_tiezi_floors {
-    #跟帖内容
-    
-}
+#子版块 url
+sub parse_board_subboards { }
 
-sub parse_tiezi_urls {
-    #帖子分页url 
-}
+#版块帖子 url
+sub parse_board_tiezis { }
 
-sub parse_board_topic {
-    #版块内容    
-}
-
-sub parse_board_subboards {
-    #子版块 url 
-}
-
-sub parse_board_tiezis {
-    #版块帖子 url
-}
-
-sub parse_board_urls {
-    #版块分页 url 
-}
-
+#版块分页 url
+sub parse_board_urls { }
 
 no Moo;
 1;
