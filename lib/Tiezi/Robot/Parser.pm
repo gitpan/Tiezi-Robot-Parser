@@ -3,7 +3,7 @@ package  Tiezi::Robot::Parser;
 use Moo;
 use Tiezi::Robot::Parser::HJJ;
 
-our $VERSION =0.05;
+our $VERSION =0.06;
 
 sub init_parser {
     my ( $self, $site ) = @_; 

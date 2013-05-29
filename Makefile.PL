@@ -9,7 +9,7 @@ use ExtUtils::MakeMaker 6.30;
 
 
 my %WriteMakefileArgs = (
-  "ABSTRACT" => "\345\270\226\345\255\220\347\253\231\347\202\271\350\247\243\346\236\220\345\274\225\346\223\216",
+  "ABSTRACT" => "\345\270\226\345\255\220\347\253\231\347\202\271\350\247\243\346\236\220\345\274\225\346\223\216\r",
   "AUTHOR" => "abbypan <abbypan\@gmail.com>",
   "BUILD_REQUIRES" => {},
   "CONFIGURE_REQUIRES" => {
@@ -20,15 +20,29 @@ my %WriteMakefileArgs = (
   "LICENSE" => "perl",
   "NAME" => "Tiezi::Robot::Parser",
   "PREREQ_PM" => {
-    "Moo" => "1.000007",
-    "Web::Scraper" => "0.37"
+    "Moo" => 0,
+    "Web::Scraper" => 0
   },
-  "VERSION" => "0.05",
+  "TEST_REQUIRES" => {},
+  "VERSION" => "0.06",
   "test" => {
     "TESTS" => ""
   }
 );
 
+
+unless ( eval { ExtUtils::MakeMaker->VERSION(6.63_03) } ) {
+  my $tr = delete $WriteMakefileArgs{TEST_REQUIRES};
+  my $br = $WriteMakefileArgs{BUILD_REQUIRES};
+  for my $mod ( keys %$tr ) {
+    if ( exists $br->{$mod} ) {
+      $br->{$mod} = $tr->{$mod} if $tr->{$mod} > $br->{$mod};
+    }
+    else {
+      $br->{$mod} = $tr->{$mod};
+    }
+  }
+}
 
 unless ( eval { ExtUtils::MakeMaker->VERSION(6.56) } ) {
   my $br = delete $WriteMakefileArgs{BUILD_REQUIRES};

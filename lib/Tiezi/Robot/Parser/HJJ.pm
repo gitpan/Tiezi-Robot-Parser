@@ -98,7 +98,7 @@ sub parse_board_tiezis {
     
     for (@tiezi_list) {
         my %temp;
-        @temp{qw/url title/} = m{href="(showmsg.php\?board=\d+&id=\d+)[^>]+>(.+?)&nbsp;};
+        @temp{qw/url title/} = m{href="(showmsg.php\?board=\d+[^>]*?&id=\d+)[^>]+>(.+?)</a>}s;
         @temp{qw/name/} = m{</td></tr></table></td>\s+<td>&nbsp;(.+?)</td>}s;
         @temp{qw/time/}=m{<td align="center"><font size="-1">(.+?)</font></td>}s;
         $temp{url} = "$self->{base}/$temp{url}";
