@@ -9,7 +9,7 @@ use ExtUtils::MakeMaker 6.30;
 
 
 my %WriteMakefileArgs = (
-  "ABSTRACT" => "\345\270\226\345\255\220\347\253\231\347\202\271\350\247\243\346\236\220\345\274\225\346\223\216\r",
+  "ABSTRACT" => "\345\260\217\350\257\264\347\253\231\347\202\271\350\247\243\346\236\220\345\274\225\346\223\216",
   "AUTHOR" => "abbypan <abbypan\@gmail.com>",
   "BUILD_REQUIRES" => {},
   "CONFIGURE_REQUIRES" => {
@@ -24,7 +24,7 @@ my %WriteMakefileArgs = (
     "Web::Scraper" => 0
   },
   "TEST_REQUIRES" => {},
-  "VERSION" => "0.06",
+  "VERSION" => "0.07",
   "test" => {
     "TESTS" => ""
   }

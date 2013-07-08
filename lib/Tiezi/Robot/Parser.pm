@@ -1,19 +1,19 @@
-# ABSTRACT: 帖子站点解析引擎
+# ABSTRACT: 小说站点解析引擎
 package  Tiezi::Robot::Parser;
 use Moo;
 use Tiezi::Robot::Parser::HJJ;
 
-our $VERSION =0.06;
+our $VERSION = 0.07;
 
 sub init_parser {
-    my ( $self, $site ) = @_; 
+    my ( $self, $site ) = @_;
     my $s      = $self->detect_site($site);
     my $parser = eval qq[new Tiezi::Robot::Parser::$s()];
     return $parser;
 } ## end sub init_parser
 
 sub detect_site {
-    my ( $self, $url ) = @_; 
+    my ( $self, $url ) = @_;
     return $url unless ( $url =~ /^http/ );
 
     my $site =
@@ -23,6 +23,4 @@ sub detect_site {
     return $site;
 } ## end sub detect_site
 
-
-no Moo;
 1;

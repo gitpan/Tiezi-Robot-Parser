@@ -51,8 +51,12 @@ sub parse_tiezi_floors {
 
         ( $fl{content} ) =
             $cell =~ m{<tr>\s*<td[^>]*class="read">\s*(.*?)\s*</td>\s*</tr>\s*</table>}s;
-        $fl{content} =~ s#本帖尚未审核,若发布24小时后仍未审核通过会被屏蔽##s;
-        $fl{content} =~ s#</?font[^>]+>##sg;
+        for ($fl{content}){
+            s#本帖尚未审核,若发布24小时后仍未审核通过会被屏蔽##s;
+            s#</?font[^>]*>##isg;
+            s#</?(b|u)>##sig;
+        }
+
         $fl{title} = '';
         ( $fl{id} ) = $cell =~ m{№(\d+)</font>}s;
 
@@ -119,7 +123,7 @@ sub parse_board_urls {
 } ## end sub parse_board_urls
 
 
-sub make_query_url {
+sub make_query_request {
 
     my ( $self, $opt ) = @_;
 
@@ -143,9 +147,9 @@ sub make_query_url {
     
     return ( $url, $post );
 
-} ## end sub make_query_url
+} ## end sub make_query_request
 
-sub get_query_result_urls {
+sub parse_query_result_urls {
 
     ###查询结果为多页
     my ( $self, $html_ref ) = @_;
@@ -155,7 +159,7 @@ sub get_query_result_urls {
     my @urls = map { encode($self->{charset}, "$self->{base}$url$_") } ( 2 .. $page_num);
 
     return \@urls;
-} ## end sub get_query_result_urls
+} ## end sub parse_query_result_urls
 
 sub parse_query {
     my ( $self, $html_ref ) = @_;
