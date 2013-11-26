@@ -7,9 +7,4 @@ README.md
 dist.ini
 lib/Tiezi/Robot/Parser.pm
 lib/Tiezi/Robot/Parser/Base.pm
-lib/Tiezi/Robot/Parser/Dddbbb.pm
 lib/Tiezi/Robot/Parser/HJJ.pm
-lib/Tiezi/Robot/Parser/Jjwxc.pm
-lib/Tiezi/Robot/Parser/Nunu.pm
-lib/Tiezi/Robot/Parser/Shunong.pm
-lib/Tiezi/Robot/Parser/TXT.pm

@@ -48,6 +48,8 @@ sub parse_tiezi_floors {
             $cell
             =~ m#☆☆☆</font>(.*?)</b><font color="99CC00">于</font>(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})留言#s;
         $fl{name} =~ s/<\/?(font|b).*?>//gsi;
+        $fl{name}=~s/^-*//;
+        $fl{name} ||= 'unknown';
 
         ( $fl{content} ) =
             $cell =~ m{<tr>\s*<td[^>]*class="read">\s*(.*?)\s*</td>\s*</tr>\s*</table>}s;
