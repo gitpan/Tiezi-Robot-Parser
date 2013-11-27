@@ -17,6 +17,7 @@ sub parse_tiezi_topic {
     my ( $self, $html_ref ) = @_;
     my %t;
     for ($$html_ref) {
+        return unless($_);
 
         ( $t{title} ) =
             m{<td bgcolor="#E8F3FF"><div style="float: left;">\s*主题：(.+?)<font color="#999999" size="-1">}s;

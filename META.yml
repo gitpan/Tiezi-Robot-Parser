@@ -15,4 +15,4 @@ name: Tiezi-Robot-Parser
 requires:
   Moo: 0
   Web::Scraper: 0
-version: 0.08
+version: 0.09
