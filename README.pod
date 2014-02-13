@@ -1,0 +1,15 @@
+=pod
+
+=encoding utf8
+
+=head1 NAME
+
+L<Tiezi::Robot::Parser> 解析论坛贴子
+
+=head1 FUNCTION
+    
+=head2 new
+
+    my $parser = Tiezi::Robot::Parser->new(site => 'HJJ');
+
+=cut

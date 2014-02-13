@@ -1,15 +1,16 @@
 # ABSTRACT: 小说站点解析引擎
 package  Tiezi::Robot::Parser;
-use Moo;
-use Tiezi::Robot::Parser::HJJ;
+our $VERSION = 0.10;
 
-our $VERSION = 0.09;
+sub new {
+    my ( $self, %opt) = @_;
 
-sub init_parser {
-    my ( $self, $site ) = @_;
-    my $s      = $self->detect_site($site);
-    my $parser = eval qq[new Tiezi::Robot::Parser::$s()];
-    return $parser;
+    $opt{site}      = $self->detect_site($opt{site}) || 'HJJ';
+    my $module = "Tiezi::Robot::Parser::$opt{site}";
+
+    eval "require $module;";
+    bless { %opt }, $module;
+
 } ## end sub init_parser
 
 sub detect_site {
@@ -19,8 +20,16 @@ sub detect_site {
     my $site =
           ( $url =~ m#^http://bbs\.jjwxc\.net/# )  ? 'HJJ'
         :                                            'Base';
-
     return $site;
 } ## end sub detect_site
+
+sub calc_floor_wordnum {
+    my ($self, $f) = @_;
+    return if(exists $f->{word_num});
+    my $wd = $f->{content};
+    $wd =~ s/<[^>]+>//gs;
+    $f->{word_num} = $wd =~ s/\S//gs;
+    return $f;
+}
 
 1;
