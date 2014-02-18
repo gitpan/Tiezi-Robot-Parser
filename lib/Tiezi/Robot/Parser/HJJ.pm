@@ -19,12 +19,15 @@ sub parse_tiezi_topic {
         return unless ($_);
 
         ( $t{title} ) =
-m{<td bgcolor="#E8F3FF"><div style="float: left;">\s*主题：(.+?)<font color="#999999" size="-1">}s;
+m{<td bgcolor="\#E8F3FF"><div style="float: left;">\s*主题：(.+?)\s*<font color="\#999999" size="-1">}s;
         ( $t{content} ) =
 m{<td class="read"><div id="topic">(.*?)</div>\s*</td>\s*</tr>\s*</table>}s;
+        $t{content} ||='';
         $t{content} =~ s#</?font[^>]+>##sg;
         ( $t{name}, $t{time} ) =
 m#№0&nbsp;</font>.*?☆☆☆</font>(.*?)</b><font color="99CC00">于</font>(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})留言#s;
+
+        $t{name} ||= 'unknown';
         $t{name} =~ s/<\/?(font|b).*?>//gsi;
         $t{id} = 0;
     } ## end for ($$html_ref)
@@ -47,7 +50,7 @@ m#(<tr>\s+<td colspan="2">.*?<td><font color=99CC00 size="-1">.*?</tr>)#gis
 
         ( $fl{name}, $fl{time} ) =
           $cell =~
-m#☆☆☆</font>(.*?)</b><font color="99CC00">于</font>(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})留言#s;
+m#☆☆☆</font>\s*(.*?)\s*</b><font color="99CC00">于</font>(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})留言#s;
         $fl{name} =~ s/<\/?(font|b).*?>//gsi;
         $fl{name} =~ s/^-*//;
         $fl{name} ||= 'unknown';
@@ -65,7 +68,7 @@ s#本帖尚未审核,若发布24小时后仍未审核通过会被屏蔽##s;
         $fl{title} = '';
         ( $fl{id} ) = $cell =~ m{№(\d+)</font>}s;
 
-        $self->calc_floor_wordnum(\%fl);
+        $self->calc_content_wordnum(\%fl);
 
         push @floor, \%fl;
     } ## end while ( $$html_ref =~ ...)
@@ -176,28 +179,6 @@ m[id="selectpage" onChange="location.href='(.+?)'\+this.value"></select>]s;
 } ## end sub parse_query_result_urls
 
 
-#sub parse_query {
-    #my ( $self, $html_ref ) = @_;
-
-    #my $parse_query = scraper {
-        #process '//table[@cellpadding="2"]//tr', 'tiezis[]' => sub {
-            #my $h = $_[0]->look_down( '_tag', 'a' );
-            #return unless ($h);
-            #my $title = $h->as_trimmed_text;
-            #$title =~ s#</?font[^>]+>##ig;
-            #my $url = $h->attr('href');
-            #$url = "$BASE/$url";
-            #return {
-                #'title' => $title,
-                #url     => encode( $CHARSET, $url )
-            #};
-        #};
-        #result 'tiezis';
-    #};
-    #my $ref = $parse_query->scrape($html_ref);
-
-    #return $ref;
-#} ## end sub parse_query
 
 sub parse_query {
     my ($self, $html_ref) = @_;
